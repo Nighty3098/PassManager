@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include "passsafe.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,8 +21,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    PassSafe *PassSafeWindow;
 
 private slots:
+    void openPassSafe();
     QString checkUserPassword();
 };
 #endif // MAINWINDOW_H

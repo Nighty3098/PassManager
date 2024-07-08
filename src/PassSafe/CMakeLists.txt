@@ -29,6 +29,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         resources.qrc
         functional.cpp
+        passsafe.h passsafe.cpp
+        PassSafe.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET PassSafe APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

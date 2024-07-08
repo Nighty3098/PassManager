@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QObject>
 #include <QPushButton>
+#include <QMainWindow>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
                                    "}");
 
     connect(ui->closeButton, &QPushButton::clicked, this, [this]() { close(); });
-    connect(ui->login_button, &QPushButton::clicked, this, [this]() { checkUserPassword(); });
+    connect(ui->login_button, &QPushButton::clicked, this, [this]() { openPassSafe(); });
 }
 
 MainWindow::~MainWindow()
@@ -44,4 +46,18 @@ QString MainWindow::checkUserPassword() {
     qDebug() << "User password: " << password;
 
     return password;
+}
+
+void MainWindow::openPassSafe() {
+    PassSafeWindow = new PassSafe();
+
+    QString password = checkUserPassword();
+
+    if(password == "qwerty") {
+        PassSafeWindow->show();
+        this->close();
+    }
+    else {
+        QMessageBox::information(nullptr, "~ PassSafe ~", "PassSafe Error: Wrong password.");
+    }
 }
