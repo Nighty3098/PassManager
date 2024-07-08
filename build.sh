@@ -1,5 +1,7 @@
 #!/bin/bash
 
-cd src/
-qmake PassSafe.pro
+rm -rf src/PassSafe/build
+cd src/PassSafe
+mkdir build
+cmake .
 make

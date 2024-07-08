@@ -1,1 +1,6 @@
 src/PassSafe/build/
+src/PassSafe/CMakeFiles/
+src/PassSafe/PassSafe_autogen/
+src/PassSafe/build/
+src/PassSafe/.qt/
+src/PassSafe/.lupdate/

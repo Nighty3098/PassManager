@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./src/PassSafe
+./src/PassSafe/PassSafe
