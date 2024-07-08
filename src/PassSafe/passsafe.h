@@ -4,6 +4,7 @@
 #include "ui_PassSafe.h"
 #include <QMainWindow>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class PassSafe;
@@ -19,6 +20,9 @@ public:
 
 private:
     Ui::PassSafe *ui;
+
+private slots:
+    QString generateRandomString();
 
 signals:
 };
