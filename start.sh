@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./src/PassManager
+./src/PassSafe
