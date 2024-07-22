@@ -3,7 +3,7 @@
 
 #include "ui_PassSafe.h"
 #include <QMainWindow>
-
+#include <QDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,6 +19,7 @@ public:
     ~PassSafe();
 
 private:
+    QDialog *passwordDialog;
     Ui::PassSafe *ui;
 
 private slots:

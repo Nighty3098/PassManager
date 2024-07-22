@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     this->setWindowFlag(Qt::FramelessWindowHint);
-    this->setFixedSize(300, 350);
+    this->setFixedSize(400, 600);
 
     ui->user_image->setPixmap(QPixmap(":/resources/user.png").scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -49,11 +49,10 @@ QString MainWindow::checkUserPassword() {
 }
 
 void MainWindow::openPassSafe() {
-    PassSafeWindow = new PassSafe();
-
     QString password = checkUserPassword();
 
     if(password == "qwerty") {
+        PassSafeWindow = new PassSafe();
         PassSafeWindow->show();
         this->close();
     }
