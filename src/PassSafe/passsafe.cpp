@@ -17,6 +17,10 @@ PassSafe::PassSafe(QWidget *parent)
 
     QThread *createPassThread = new QThread;
     QObject::connect(createPassThread, &QThread::started, this, [this]() {
+        QFont systemFont = QApplication::font();
+        int fontSize = systemFont.pointSize();
+        systemFont.setPointSize(fontSize);
+
         QString new_password = generateRandomString();
 
         passwordDialog = new QDialog;
@@ -26,12 +30,15 @@ PassSafe::PassSafe(QWidget *parent)
 
         QLabel *text_label = new QLabel("Memorize your new password. It is one-time and will be changed after the next start of the program");
         text_label->setAlignment(Qt::AlignCenter);
+        text_label->setFont(systemFont);
 
         QLabel *password_text = new QLabel(new_password);
         password_text->setAlignment(Qt::AlignCenter);
+        password_text->setFont(systemFont);
 
         QPushButton *copyPasswordButton = new QPushButton("Copy && Close");
         copyPasswordButton->setFixedSize(150, 25);
+        copyPasswordButton->setFont(systemFont);
 
         passwordLayout->addWidget(text_label, 0, 0, 1, 3);
         passwordLayout->addWidget(password_text, 1, 0, 1, 3);

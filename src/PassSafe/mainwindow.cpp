@@ -14,6 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
     this->setFixedSize(400, 600);
 
+    QFont systemFont = QApplication::font();
+    int fontSize = systemFont.pointSize();
+    systemFont.setPointSize(fontSize);
+
+    ui->label->setFont(systemFont);
+    ui->login_button->setFont(systemFont);
+    ui->user_password->setFont(systemFont);
+
+
     ui->user_image->setPixmap(QPixmap(":/resources/user.png").scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     ui->closeButton->setFixedSize(15, 15);
