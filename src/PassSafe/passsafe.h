@@ -25,6 +25,14 @@ private:
 private slots:
     QString generateRandomString();
 
+    void loadPasswordsDB();
+    void decrypt_data();
+    void encrypt_data();
+    
+    void addData();
+
+    void copyData(QString dataType);
+
 signals:
 };
 

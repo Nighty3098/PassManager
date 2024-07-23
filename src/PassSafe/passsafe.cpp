@@ -15,12 +15,12 @@ PassSafe::PassSafe(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QThread *createPassThread = new QThread;
-    QObject::connect(createPassThread, &QThread::started, this, [this]() {
-        QFont systemFont = QApplication::font();
-        int fontSize = systemFont.pointSize();
-        systemFont.setPointSize(fontSize);
+    QFont systemFont = QApplication::font();
+    int fontSize = systemFont.pointSize();
+    systemFont.setPointSize(fontSize);
 
+    QThread *createPassThread = new QThread;
+    QObject::connect(createPassThread, &QThread::started, this, [this, systemFont]() {
         QString new_password = generateRandomString();
 
         passwordDialog = new QDialog;
@@ -53,6 +53,20 @@ PassSafe::PassSafe(QWidget *parent)
         passwordDialog->exec();
     });
     createPassThread->start();
+
+    ui->listOfData->setFont(systemFont);
+    ui->addData->setFont(systemFont);
+    ui->passwordData->setFont(systemFont);
+    ui->siteData->setFont(systemFont);
+    ui->copyPassBtn->setFont(systemFont);
+    ui->copySiteBtn->setFont(systemFont);
+
+
+    QObject::connect(ui->addData, &QPushButton::clicked, this, [this]() { addData(); });
+
+    QObject::connect(ui->copySiteBtn, &QPushButton::clicked, this, [this]() { copyData("site"); });
+    QObject::connect(ui->copyPassBtn, &QPushButton::clicked, this, [this]() { copyData("password"); });
+
 }
 PassSafe::~PassSafe() {};
 
@@ -73,4 +87,41 @@ QString PassSafe::generateRandomString() {
     }
 
     return result;
+}
+
+void PassSafe::loadPasswordsDB() {}
+void PassSafe::decrypt_data() {}
+void PassSafe::encrypt_data() {}
+
+void PassSafe::addData() {
+    QString site = ui->siteData->text();
+    QString password = ui->passwordData->text();
+
+    QString data = site + " | " + password;
+    ui->listOfData->addItem(data);
+
+    qDebug() << "site: " << site << " password: " << password;
+
+    ui->siteData->clear();
+    ui->passwordData->clear();
+}
+
+void PassSafe::copyData(QString dataType) {
+    QClipboard *clipboard = QApplication::clipboard();
+
+    QListWidgetItem* selectedItem = ui->listOfData->currentItem();
+    QString selectedText = selectedItem->text();
+    QStringList parts = selectedText.split(" | ");
+
+    if (dataType == "password") {
+        qDebug() << "copied password: " << parts[1];
+
+        clipboard->setText(parts[1]);
+    }
+    if (dataType == "site") {
+        qDebug() << "copied site: " << parts[0];
+
+        clipboard->setText(parts[0]);
+    }
+    else {}
 }
