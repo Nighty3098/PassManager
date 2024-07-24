@@ -3,7 +3,7 @@
  <class>PassSafe</class>
  <widget class="QMainWindow" name="PassSafe">
   <property name="windowModality">
-   <enum>Qt::NonModal</enum>
+   <enum>Qt::WindowModality::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -17,7 +17,7 @@
    <string>MainWindow</string>
   </property>
   <property name="dockOptions">
-   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+   <set>QMainWindow::DockOption::AllowTabbedDocks|QMainWindow::DockOption::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -35,20 +35,6 @@
       <property name="bottomMargin">
        <number>12</number>
       </property>
-      <item row="0" column="0">
-       <widget class="QLineEdit" name="siteData">
-        <property name="placeholderText">
-         <string>site / app</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="passwordData">
-        <property name="placeholderText">
-         <string>password</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1" rowspan="2">
        <widget class="QPushButton" name="addData">
         <property name="minimumSize">
@@ -62,29 +48,43 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="passwordData">
+        <property name="placeholderText">
+         <string>password</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="siteData">
+        <property name="placeholderText">
+         <string>site / app</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QListWidget" name="listOfData">
+        <property name="styleSheet">
+         <string notr="true">background: transparent; border: none;</string>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::DropAction::MoveAction</enum>
+        </property>
+       </widget>
+      </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QListWidget" name="listOfData">
-      <property name="styleSheet">
-       <string notr="true">background: transparent; border: none;</string>
-      </property>
-      <property name="tabKeyNavigation">
-       <bool>true</bool>
-      </property>
-      <property name="dragEnabled">
-       <bool>true</bool>
-      </property>
-      <property name="dragDropOverwriteMode">
-       <bool>true</bool>
-      </property>
-      <property name="dragDropMode">
-       <enum>QAbstractItemView::DragDrop</enum>
-      </property>
-      <property name="defaultDropAction">
-       <enum>Qt::MoveAction</enum>
-      </property>
-     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -103,7 +103,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

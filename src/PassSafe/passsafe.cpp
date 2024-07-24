@@ -4,7 +4,9 @@
 #include <QRandomGenerator>
 #include <QMessageBox>
 #include <QThread>
+#include <QMenu>
 #include <QLabel>
+#include <QShortcut>
 #include <QGridLayout>
 #include <QPushButton>
 #include <QClipboard>
@@ -61,9 +63,15 @@ PassSafe::PassSafe(QWidget *parent)
     ui->copyPassBtn->setFont(systemFont);
     ui->copySiteBtn->setFont(systemFont);
 
+    ui->listOfData->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    QShortcut *addDataAction = new QShortcut(QKeySequence(Qt::Key_Return), this);
+    connect(addDataAction, &QShortcut::activated, this, [this]() { addData(); });
+
+    QShortcut *deleteDataAction = new QShortcut(QKeySequence(Qt::Key_Delete), this);
+    connect(deleteDataAction, &QShortcut::activated, this, [this]() { deleteItem(); });
 
     QObject::connect(ui->addData, &QPushButton::clicked, this, [this]() { addData(); });
-
     QObject::connect(ui->copySiteBtn, &QPushButton::clicked, this, [this]() { copyData("site"); });
     QObject::connect(ui->copyPassBtn, &QPushButton::clicked, this, [this]() { copyData("password"); });
 
@@ -125,3 +133,45 @@ void PassSafe::copyData(QString dataType) {
     }
     else {}
 }
+
+void PassSafe::deleteItem() {
+    delete ui->listOfData->takeItem(ui->listOfData->row(ui->listOfData->currentItem()));
+}
+
+void PassSafe::editData() {
+
+}
+
+void PassSafe::on_listOfData_customContextMenuRequested(const QPoint &pos)
+{
+    QPoint item = ui->listOfData->mapToGlobal(pos);
+    QMenu *submenu = new QMenu;
+
+    submenu->addAction("Copy site");
+    submenu->addAction("Copy password");
+    submenu->addSeparator();
+    submenu->addAction("Delete");
+    submenu->addAction("Edit");
+
+    QAction* rightClickItem = submenu->exec(item);
+    if (rightClickItem && rightClickItem->text().contains("Copy site") )
+    {
+        copyData("site");
+    }
+    if (rightClickItem && rightClickItem->text().contains("Copy password") )
+    {
+        copyData("password");
+    }
+    if (rightClickItem && rightClickItem->text().contains("Delete") )
+    {
+        deleteItem();
+    }
+    if (rightClickItem && rightClickItem->text().contains("Edit") )
+    {
+        editData();
+    }
+    else {
+
+    }
+}
+

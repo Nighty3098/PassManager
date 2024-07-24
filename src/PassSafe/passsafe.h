@@ -30,8 +30,12 @@ private slots:
     void encrypt_data();
     
     void addData();
+    void deleteItem();
+    void editData();
 
     void copyData(QString dataType);
+
+    void on_listOfData_customContextMenuRequested(const QPoint &pos);
 
 signals:
 };
