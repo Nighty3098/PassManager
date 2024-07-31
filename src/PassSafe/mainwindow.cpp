@@ -5,9 +5,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -40,7 +38,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QString MainWindow::checkUserPassword() {
+QString MainWindow::checkUserPassword()
+{
     QString password;
     password = ui->user_password->text();
 
@@ -49,29 +48,29 @@ QString MainWindow::checkUserPassword() {
     return password;
 }
 
-void MainWindow::openPassSafe() {
+void MainWindow::openPassSafe()
+{
     QString password = checkUserPassword();
 
-    if(password == "qwerty") {
+    if (password == "qwerty") {
         PassSafeWindow = new PassSafe();
         PassSafeWindow->show();
         this->close();
-    }
-    else {
+    } else {
         QFont systemFont = QApplication::font();
         int fontSize = systemFont.pointSize();
         systemFont.setPointSize(fontSize);
 
-        QDialog *errorDialog = new QDialog;
+        QDialog* errorDialog = new QDialog;
         errorDialog->setWindowFlag(Qt::FramelessWindowHint);
         errorDialog->setFixedSize(200, 200);
-        QGridLayout *passwordLayout = new QGridLayout(errorDialog);
+        QGridLayout* passwordLayout = new QGridLayout(errorDialog);
 
-        QLabel *label = new QLabel("PassSafe Error: Wrong key");
+        QLabel* label = new QLabel("PassSafe Error: Wrong key");
         label->setAlignment(Qt::AlignCenter);
         label->setFont(systemFont);
 
-        QPushButton *closeDialogButton = new QPushButton("close");
+        QPushButton* closeDialogButton = new QPushButton("close");
         closeDialogButton->setFixedSize(150, 25);
         closeDialogButton->setFont(systemFont);
         connect(closeDialogButton, &QPushButton::clicked, errorDialog, [errorDialog]() { errorDialog->close(); });
@@ -83,7 +82,8 @@ void MainWindow::openPassSafe() {
     }
 }
 
-void MainWindow::showPasswordInput() {
+void MainWindow::showPasswordInput()
+{
     if (ui->user_password->echoMode() == QLineEdit::Password) {
         ui->user_password->setEchoMode(QLineEdit::Normal);
     } else {

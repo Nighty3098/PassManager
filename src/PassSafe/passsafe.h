@@ -28,6 +28,8 @@ private slots:
     void loadPasswordsDB();
     void decrypt_data();
     void encrypt_data();
+
+    bool checkForData(QString data);
     
     void addData();
     void deleteItem();

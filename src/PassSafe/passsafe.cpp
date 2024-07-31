@@ -11,28 +11,26 @@
 #include <QPushButton>
 #include <QClipboard>
 
-PassSafe::PassSafe(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::PassSafe)
+PassSafe::PassSafe(QWidget* parent) : QMainWindow(parent), ui(new Ui::PassSafe)
 {
     ui->setupUi(this);
 
-    QThread *createPassThread = new QThread;
+    QThread* createPassThread = new QThread;
     QObject::connect(createPassThread, &QThread::started, this, [this]() {
         QString new_password = generateRandomString();
 
         passwordDialog = new QDialog;
         passwordDialog->setFixedSize(600, 100);
         passwordDialog->setWindowFlag(Qt::FramelessWindowHint);
-        QGridLayout *passwordLayout = new QGridLayout(passwordDialog);
+        QGridLayout* passwordLayout = new QGridLayout(passwordDialog);
 
-        QLabel *text_label = new QLabel("Memorize your new key. It is one-time and will be changed after the next start of the program");
+        QLabel* text_label = new QLabel("Memorize your new key. It is one-time and will be changed after the next start of the program");
         text_label->setAlignment(Qt::AlignCenter);
 
-        QLabel *password_text = new QLabel(new_password);
+        QLabel* password_text = new QLabel(new_password);
         password_text->setAlignment(Qt::AlignCenter);
 
-        QPushButton *copyPasswordButton = new QPushButton("Copy && Close");
+        QPushButton* copyPasswordButton = new QPushButton("Copy && Close");
         copyPasswordButton->setFixedSize(150, 25);
 
         passwordLayout->addWidget(text_label, 0, 0, 1, 3);
@@ -40,7 +38,7 @@ PassSafe::PassSafe(QWidget *parent)
         passwordLayout->addWidget(copyPasswordButton, 2, 0, 1, 3, Qt::AlignCenter);
 
         QObject::connect(copyPasswordButton, &QPushButton::clicked, [&]() {
-            QClipboard *clipboard = QApplication::clipboard();
+            QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(new_password);
             passwordDialog->close();
         });
@@ -49,24 +47,22 @@ PassSafe::PassSafe(QWidget *parent)
     });
     createPassThread->start();
 
-
     ui->listOfData->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    QShortcut *addDataAction = new QShortcut(QKeySequence(Qt::Key_Return), this);
+    QShortcut* addDataAction = new QShortcut(QKeySequence(Qt::Key_Return), this);
     connect(addDataAction, &QShortcut::activated, this, [this]() { addData(); });
 
-    QShortcut *deleteDataAction = new QShortcut(QKeySequence(Qt::Key_Delete), this);
+    QShortcut* deleteDataAction = new QShortcut(QKeySequence(Qt::Key_Delete), this);
     connect(deleteDataAction, &QShortcut::activated, this, [this]() { deleteItem(); });
 
     QObject::connect(ui->addData, &QPushButton::clicked, this, [this]() { addData(); });
     QObject::connect(ui->copySiteBtn, &QPushButton::clicked, this, [this]() { copyData("site"); });
     QObject::connect(ui->copyPassBtn, &QPushButton::clicked, this, [this]() { copyData("password"); });
-
 }
 PassSafe::~PassSafe() {};
 
-
-QString PassSafe::generateRandomString() {
+QString PassSafe::generateRandomString()
+{
     int length = QRandomGenerator::global()->bounded(8, 14);
     QString result;
 
@@ -84,25 +80,51 @@ QString PassSafe::generateRandomString() {
     return result;
 }
 
-void PassSafe::loadPasswordsDB() {}
-void PassSafe::decrypt_data() {}
-void PassSafe::encrypt_data() {}
+bool PassSafe::checkForData(QString data)
+{
+    bool found = false;
 
-void PassSafe::addData() {
+    for (int i = 0; i < ui->listOfData->count(); ++i) {
+        QListWidgetItem* item = ui->listOfData->item(i);
+        if (item->text() == data) {
+            found = true;
+            break;
+        }
+    }
+
+    if (found) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void PassSafe::loadPasswordsDB() { }
+void PassSafe::decrypt_data() { }
+void PassSafe::encrypt_data() { }
+
+void PassSafe::addData()
+{
     QString site = ui->siteData->text();
     QString password = ui->passwordData->text();
 
     QString data = site + " | " + password;
-    ui->listOfData->addItem(data);
 
-    qDebug() << "site: " << site << " password: " << password;
+    if (!checkForData(data)) {
+        ui->listOfData->addItem(data);
 
-    ui->siteData->clear();
-    ui->passwordData->clear();
+        qDebug() << "site: " << site << " password: " << password;
+
+        ui->siteData->clear();
+        ui->passwordData->clear();
+    } else {
+        QMessageBox(QMessageBox::Information, "PassSafe", "The data is already in the database").setWindowFlag(Qt::FramelessWindowHint);
+    }
 }
 
-void PassSafe::copyData(QString dataType) {
-    QClipboard *clipboard = QApplication::clipboard();
+void PassSafe::copyData(QString dataType)
+{
+    QClipboard* clipboard = QApplication::clipboard();
 
     QListWidgetItem* selectedItem = ui->listOfData->currentItem();
     QString selectedText = selectedItem->text();
@@ -117,22 +139,21 @@ void PassSafe::copyData(QString dataType) {
         qDebug() << "copied site: " << parts[0];
 
         clipboard->setText(parts[0]);
+    } else {
     }
-    else {}
 }
 
-void PassSafe::deleteItem() {
+void PassSafe::deleteItem()
+{
     delete ui->listOfData->takeItem(ui->listOfData->row(ui->listOfData->currentItem()));
 }
 
-void PassSafe::editData() {
+void PassSafe::editData() { }
 
-}
-
-void PassSafe::on_listOfData_customContextMenuRequested(const QPoint &pos)
+void PassSafe::on_listOfData_customContextMenuRequested(const QPoint& pos)
 {
     QPoint item = ui->listOfData->mapToGlobal(pos);
-    QMenu *submenu = new QMenu;
+    QMenu* submenu = new QMenu;
 
     submenu->addAction("Copy site");
     submenu->addAction("Copy password");
@@ -141,24 +162,17 @@ void PassSafe::on_listOfData_customContextMenuRequested(const QPoint &pos)
     submenu->addAction("Edit");
 
     QAction* rightClickItem = submenu->exec(item);
-    if (rightClickItem && rightClickItem->text().contains("Copy site") )
-    {
+    if (rightClickItem && rightClickItem->text().contains("Copy site")) {
         copyData("site");
     }
-    if (rightClickItem && rightClickItem->text().contains("Copy password") )
-    {
+    if (rightClickItem && rightClickItem->text().contains("Copy password")) {
         copyData("password");
     }
-    if (rightClickItem && rightClickItem->text().contains("Delete") )
-    {
+    if (rightClickItem && rightClickItem->text().contains("Delete")) {
         deleteItem();
     }
-    if (rightClickItem && rightClickItem->text().contains("Edit") )
-    {
+    if (rightClickItem && rightClickItem->text().contains("Edit")) {
         editData();
-    }
-    else {
-
+    } else {
     }
 }
-
