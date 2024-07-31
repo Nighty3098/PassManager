@@ -16,5 +16,10 @@
         <file>../resources/eye.png</file>
         <file>../resources/add.png</file>
         <file>../resources/copy.png</file>
+        <file>../resources/german.png</file>
+        <file>../resources/spanish.png</file>
+        <file>../resources/usa.png</file>
+        <file>../resources/japan.png</file>
+        <file>../resources/russian.png</file>
     </qresource>
 </RCC>

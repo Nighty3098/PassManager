@@ -56,8 +56,6 @@ PassSafe::PassSafe(QWidget* parent) : QMainWindow(parent), ui(new Ui::PassSafe)
     connect(deleteDataAction, &QShortcut::activated, this, [this]() { deleteItem(); });
 
     QObject::connect(ui->addData, &QPushButton::clicked, this, [this]() { addData(); });
-    QObject::connect(ui->copySiteBtn, &QPushButton::clicked, this, [this]() { copyData("site"); });
-    QObject::connect(ui->copyPassBtn, &QPushButton::clicked, this, [this]() { copyData("password"); });
 }
 PassSafe::~PassSafe() {};
 
@@ -118,7 +116,7 @@ void PassSafe::addData()
         ui->siteData->clear();
         ui->passwordData->clear();
     } else {
-        QMessageBox(QMessageBox::Information, "PassSafe", "The data is already in the database").setWindowFlag(Qt::FramelessWindowHint);
+        QMessageBox(QMessageBox::Information, "PassSafe", "The data is already in the database");
     }
 }
 
