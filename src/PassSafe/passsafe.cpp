@@ -30,7 +30,7 @@ PassSafe::PassSafe(QWidget *parent)
         passwordDialog->setWindowFlag(Qt::FramelessWindowHint);
         QGridLayout *passwordLayout = new QGridLayout(passwordDialog);
 
-        QLabel *text_label = new QLabel("Memorize your new password. It is one-time and will be changed after the next start of the program");
+        QLabel *text_label = new QLabel("Memorize your new key. It is one-time and will be changed after the next start of the program");
         text_label->setAlignment(Qt::AlignCenter);
         text_label->setFont(systemFont);
 

@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->login_button->setFont(systemFont);
     ui->user_password->setFont(systemFont);
 
-
     ui->user_image->setPixmap(QPixmap(":/resources/user.png").scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     ui->closeButton->setFixedSize(15, 15);
@@ -41,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->closeButton, &QPushButton::clicked, this, [this]() { close(); });
     connect(ui->login_button, &QPushButton::clicked, this, [this]() { openPassSafe(); });
+    connect(ui->showPasswordButton, &QPushButton::clicked, this, [this]() { showPasswordInput(); });
 }
 
 MainWindow::~MainWindow()
@@ -52,7 +52,7 @@ QString MainWindow::checkUserPassword() {
     QString password;
     password = ui->user_password->text();
 
-    qDebug() << "User password: " << password;
+    qDebug() << "User key: " << password;
 
     return password;
 }
@@ -66,6 +66,14 @@ void MainWindow::openPassSafe() {
         this->close();
     }
     else {
-        QMessageBox::information(nullptr, "~ PassSafe ~", "PassSafe Error: Wrong password.");
+        QMessageBox::information(nullptr, "~ PassSafe ~", "PassSafe Error: Wrong key.");
+    }
+}
+
+void MainWindow::showPasswordInput() {
+    if (ui->user_password->echoMode() == QLineEdit::Password) {
+        ui->user_password->setEchoMode(QLineEdit::Normal);
+    } else {
+        ui->user_password->setEchoMode(QLineEdit::Password);
     }
 }

@@ -3,5 +3,16 @@
         <file>../resources/user.png</file>
         <file>../resources/redHovered.png</file>
         <file>../resources/red.png</file>
+        <file>../resources/key.png</file>
+        <file>../resources/setting.png</file>
+        <file>../resources/yellow.png</file>
+        <file>../resources/yellowHovered.png</file>
+        <file>../resources/green.png</file>
+        <file>../resources/greenInHovered.png</file>
+        <file>../resources/greenHovered.png</file>
+        <file>../resources/github.png</file>
+        <file>../resources/refresh.png</file>
+        <file>../resources/folder.png</file>
+        <file>../resources/eye.png</file>
     </qresource>
 </RCC>

@@ -26,5 +26,6 @@ private:
 private slots:
     void openPassSafe();
     QString checkUserPassword();
+    void showPasswordInput();
 };
 #endif // MAINWINDOW_H
