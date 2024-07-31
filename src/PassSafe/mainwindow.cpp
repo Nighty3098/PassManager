@@ -14,14 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
     this->setFixedSize(400, 600);
 
-    QFont systemFont = QApplication::font();
-    int fontSize = systemFont.pointSize();
-    systemFont.setPointSize(fontSize);
-
-    ui->label->setFont(systemFont);
-    ui->login_button->setFont(systemFont);
-    ui->user_password->setFont(systemFont);
-
     ui->user_image->setPixmap(QPixmap(":/resources/user.png").scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     ui->closeButton->setFixedSize(15, 15);
@@ -66,7 +58,28 @@ void MainWindow::openPassSafe() {
         this->close();
     }
     else {
-        QMessageBox::information(nullptr, "~ PassSafe ~", "PassSafe Error: Wrong key.");
+        QFont systemFont = QApplication::font();
+        int fontSize = systemFont.pointSize();
+        systemFont.setPointSize(fontSize);
+
+        QDialog *errorDialog = new QDialog;
+        errorDialog->setWindowFlag(Qt::FramelessWindowHint);
+        errorDialog->setFixedSize(200, 200);
+        QGridLayout *passwordLayout = new QGridLayout(errorDialog);
+
+        QLabel *label = new QLabel("PassSafe Error: Wrong key");
+        label->setAlignment(Qt::AlignCenter);
+        label->setFont(systemFont);
+
+        QPushButton *closeDialogButton = new QPushButton("close");
+        closeDialogButton->setFixedSize(150, 25);
+        closeDialogButton->setFont(systemFont);
+        connect(closeDialogButton, &QPushButton::clicked, errorDialog, [errorDialog]() { errorDialog->close(); });
+
+        passwordLayout->addWidget(label);
+        passwordLayout->addWidget(closeDialogButton);
+
+        errorDialog->exec();
     }
 }
 

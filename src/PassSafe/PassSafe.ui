@@ -33,7 +33,7 @@
        <enum>QTabWidget::TabPosition::South</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::TextElideMode::ElideMiddle</enum>
@@ -65,12 +65,22 @@
            <widget class="QPushButton" name="addData">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>60</width>
               <height>60</height>
              </size>
             </property>
             <property name="text">
-             <string>Add</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/resources/add.png</normaloff>:/resources/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>40</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -91,7 +101,76 @@
           <item row="2" column="0" colspan="2">
            <widget class="QListWidget" name="listOfData">
             <property name="styleSheet">
-             <string notr="true">background: transparent; border: none;</string>
+             <string notr="true">QListWidget {
+	background: transparent; border: none;
+}
+QScrollBar:vertical {
+    background: transparent;
+    border-radius: 3px;
+    width: 6px;
+    margin: 3px 0px 3px 0px;
+}
+
+QScrollBar:horizontal {
+    background: transparent;
+    border-radius: 3px;
+    height: 6px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    border-radius: 3px;
+    background: #666c72;
+    height: 6px;
+}
+
+QScrollBar::handle:horizontal {
+    border-radius: 3px;
+    background: #666c72;
+    min-width: 20px;
+}
+
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    border-radius: 2px;
+    background: #666c72;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    border-radius: 2px;
+    background: transparent;
+}
+
+QScrollBar::add-line:vertical {
+    border-radius: 2px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical {
+    border-radius: 2px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+    height: 0px;
+}
+
+QScrollBar::add-line:horizontal {
+    border-radius: 2px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+    width: 0px;
+}
+
+QScrollBar::sub-line:horizontal {
+    border-radius: 2px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+    width: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: transparent;
+}</string>
             </property>
             <property name="tabKeyNavigation">
              <bool>true</bool>
@@ -144,12 +223,20 @@
             <property name="text">
              <string>Copy Pass</string>
             </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/resources/copy.png</normaloff>:/resources/copy.png</iconset>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="copySiteBtn">
             <property name="text">
              <string>Copy Site</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/resources/copy.png</normaloff>:/resources/copy.png</iconset>
             </property>
            </widget>
           </item>

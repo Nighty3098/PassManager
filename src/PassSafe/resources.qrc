@@ -14,5 +14,7 @@
         <file>../resources/refresh.png</file>
         <file>../resources/folder.png</file>
         <file>../resources/eye.png</file>
+        <file>../resources/add.png</file>
+        <file>../resources/copy.png</file>
     </qresource>
 </RCC>
