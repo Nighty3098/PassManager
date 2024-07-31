@@ -336,7 +336,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
             <item>
              <widget class="QPushButton" name="browseButton">
               <property name="text">
-               <string>browse</string>
+               <string>Browse</string>
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
